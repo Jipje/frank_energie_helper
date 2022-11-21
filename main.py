@@ -1,16 +1,24 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import requests
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def load_price_data():
+    query = """query MarketPrices {
+    marketPricesElectricity(startDate: "2021-11-21", endDate: "2021-11-22") {
+        till
+        from
+        marketPrice    
+    }
+    marketPricesGas(startDate: "2021-11-21", endDate: "2021-11-22") {
+        from
+        till
+        marketPrice
+    }
+    }"""
+    headers = {'content-type': 'application/json'}
+    response = requests.post('https://graphcdn.frankenergie.nl', json={'query': query}, headers=headers)
+    data = response.json()
+    print(data)
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    load_price_data()
