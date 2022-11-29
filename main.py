@@ -10,7 +10,7 @@ SERVER = os.getenv('DISCORD_SERVER')
 intents = Intents.default()
 intents.message_content = True
 
-client = commands.Bot(command_prefix='/', intents=intents)
+client = commands.Bot(command_prefix='!', intents=intents)
 
 
 @client.event
@@ -24,12 +24,14 @@ async def on_ready():
     )
 
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@client.command()
+async def get_prices(ctx):
+    await ctx.send("I don't know anything about energy prices yet.")
 
-    await message.channel.send('Hello!')
+
+@client.command()
+async def current_price(ctx):
+    await ctx.send("I don't know what the current energy price is.")
 
 
 if __name__ == '__main__':
